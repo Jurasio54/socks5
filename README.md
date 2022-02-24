@@ -5,9 +5,10 @@
 <img alt="PyPI - Downloads" src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
 
   
-  
-Un pequeño servidor proxy Socks5 en Python
 ## Información
+Un pequeño servidor proxy Socks5 en Python
+  
+## Uso
 
 Necesitamos tener claramente Python3 instalado en el equipo donde se correrá el proxy.
 
