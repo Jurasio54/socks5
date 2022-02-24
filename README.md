@@ -1,4 +1,4 @@
-<h1 align="center">⚙️PyRoxy⚙️</h1>
+<h1 align="center">⚙️PyProxy⚙️</h1>
 
 <p align="center">
 
