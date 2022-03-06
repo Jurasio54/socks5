@@ -2,26 +2,30 @@
 import socket
 import select
 from struct import pack, unpack
-# System
+# Import Sistema
 import traceback
 from threading import Thread, activeCount
 from signal import signal, SIGINT, SIGTERM
 from time import sleep
 import sys
 from cfg import*
+import S5Crypto
 
 
 
+
+# Imprimir IP
 hostname = socket.gethostname()
-
 local_ip = socket.gethostbyname(hostname)
+print(f'\nDatos:\n\nDirección: {local_ip}:{LOCAL_PORT}\n')
+
+# Encriptado del Proxy
+enc = S5Crypto.encrypt(f'{local_ip}:{LOCAL_PORT}')
+proxy = f'socks5://' + enc
+print(f'Encriptado: {proxy}\n')
 
 
-print(local_ip)
-
-
-
-print('Pyroxy')
+#print('PyProxy')
 # Parámetro para vincular un socket a un dispositivo, usando SO_BINDTODEVICE
 # Solo la root puede establecer esta opción
 # Si el nombre es una cadena vacía o Ninguno, la interfaz se elige cuando
@@ -58,7 +62,7 @@ class ExitStatus:
         self.exit = status
 
     def get_status(self):
-        """ get exit status """
+        """ obtener estado de salida """
         return self.exit
 
 
@@ -252,7 +256,7 @@ def create_socket():
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(TIMEOUT_SOCKET)
     except socket.error as err:
-        error("Failed to create socket", err)
+        error("No se pudo crear el socket", err)
         sys.exit(0)
     return sock
 
@@ -263,11 +267,11 @@ def bind_port(sock):
         escucha las conexiones hechas al socket
     """
     try:
-        print('Puerto: {}'.format(str(LOCAL_PORT)))
+        #print('Puerto: {}'.format(str(LOCAL_PORT)))
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sock.bind((LOCAL_ADDR, LOCAL_PORT))
     except socket.error as err:
-        error("Bind failed", err)
+        error("Enlace fallido", err)
         sock.close()
         sys.exit(0)
     # Listen
@@ -282,7 +286,7 @@ def bind_port(sock):
 
 def exit_handler(signum, frame):
     """ Manejador de señales llamado con señal, script de salida """
-    print('Signal handler called with signal', signum)
+    print('Manejador de señal llamado con señal', signum)
     EXIT.set_status(True)
 
 
