@@ -11,7 +11,8 @@ import sys
 from cfg import*
 import S5Crypto
 
-
+# PyProxy 1.0
+print('PyProxy v2.5')
 
 
 # Imprimir IP
@@ -25,7 +26,7 @@ proxy = f'socks5://' + enc
 print(f'Encriptado: {proxy}\n')
 
 
-#print('PyProxy')
+
 # Parámetro para vincular un socket a un dispositivo, usando SO_BINDTODEVICE
 # Solo la root puede establecer esta opción
 # Si el nombre es una cadena vacía o Ninguno, la interfaz se elige cuando
@@ -70,7 +71,7 @@ def error(msg="", err=None):
     """ Imprimir seguimiento de pila de excepción python """
     if msg:
         traceback.print_exc()
-        print("{} - Code: {}, Message: {}".format(msg, str(err[0]), err[1]))
+        #print("{} - Code: {}, Message: {}".format(msg, str(err[0]), err[1]))
     else:
         traceback.print_exc()
 
@@ -110,7 +111,7 @@ def connect_to_dst(dst_addr, dst_port):
                 OUTGOING_INTERFACE.encode(),
             )
         except PermissionError as err:
-            print("Solo root puede establecer el parámetro OUTGOING_INTERFACE")
+            #print("Solo root puede establecer el parámetro OUTGOING_INTERFACE")
             EXIT.set_status(True)
     try:
         sock.connect((dst_addr, dst_port))
@@ -151,7 +152,11 @@ def request_client(wrapper):
         dst_port = unpack('>H', port_to_unpack)[0]
     else:
         return False
+    print('IP entrante:')
     print(dst_addr, dst_port)
+    # guardar log en un archivo txt llamado logs.txt
+    with open('logs.txt', 'a') as f:
+        f.write(f'IP entrante: {dst_addr}:{dst_port}\n')
     return (dst_addr, dst_port)
 
 
@@ -286,7 +291,7 @@ def bind_port(sock):
 
 def exit_handler(signum, frame):
     """ Manejador de señales llamado con señal, script de salida """
-    print('Manejador de señal llamado con señal', signum)
+    #print('Manejador de señal llamado con señal', signum)
     EXIT.set_status(True)
 
 
