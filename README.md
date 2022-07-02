@@ -1,4 +1,4 @@
-<h1 align="center">⚙️PyProxy⚙️</h1>
+<h1 align="center">⚙️PySOCKS5⚙️</h1>
 
 <p align="center">
 
